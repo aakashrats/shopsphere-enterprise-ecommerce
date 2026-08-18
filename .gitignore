@@ -1,0 +1,57 @@
+# ==============================
+# IDE / Editor
+# ==============================
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# ==============================
+# Java / Maven
+# ==============================
+**/target/
+**/build/
+*.class
+
+# Maven wrapper generated jar
+**/.mvn/wrapper/maven-wrapper.jar
+
+# ==============================
+# Environment / Secrets
+# ==============================
+.env
+.env.*
+!.env.example
+
+# ==============================
+# Logs
+# ==============================
+*.log
+logs/
+
+# ==============================
+# OS generated files
+# ==============================
+.DS_Store
+Thumbs.db
+
+# ==============================
+# Node / Frontend
+# ==============================
+**/node_modules/
+**/.npm/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Microsoft Office temporary files
+~$*
+
+# Personal project reference
+🚀 ShopSphere.docx
+
+# ==============================
+# Test / Coverage
+# ==============================
+**/coverage/
