@@ -1,6 +1,6 @@
 package com.shopsphere.controller;
 
-import com.shopsphere.dto.resonse.HealthResponse;
+import com.shopsphere.dto.response.HealthResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

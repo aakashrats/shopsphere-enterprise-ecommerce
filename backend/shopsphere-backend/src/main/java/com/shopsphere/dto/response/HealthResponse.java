@@ -1,4 +1,4 @@
-package com.shopsphere.dto.resonse;
+package com.shopsphere.dto.response;
 
 public class HealthResponse {
 
