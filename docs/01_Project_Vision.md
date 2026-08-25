@@ -6,7 +6,16 @@ ShopSphere is an enterprise-oriented E-Commerce platform designed to provide a s
 
 The project is being developed as a full-stack application with a Java Spring Boot backend and a modern frontend.
 
-The primary objective of ShopSphere is to build a realistic enterprise application while following industry-standard software development practices, including layered architecture, RESTful APIs, database-driven design, validation, exception handling, testing, documentation, and version control.
+The primary objective of ShopSphere is to build a realistic enterprise application while following industry-standard software development practices, including:
+
+- Layered architecture
+- RESTful APIs
+- Database-driven design
+- Validation
+- Exception handling
+- Testing
+- Documentation
+- Version control
 
 ---
 
@@ -42,21 +51,33 @@ ShopSphere is intended to support the following major user roles:
 
 ### Customer
 
-Customers will be able to interact with the E-Commerce platform to browse products, manage their shopping cart, place orders, and track their commerce activities.
+- Browse products
+- Manage shopping cart
+- Place orders
+- Track commerce activities
 
 ### Administrator
 
-Administrators will be responsible for managing products, categories, inventory, orders, users, and other administrative operations.
+- Manage products
+- Manage categories
+- Manage inventory
+- Manage orders
+- Manage users
+- Perform administrative operations
 
 ### System / Operations
 
-System and operational components will support application monitoring, system health, background processing, notifications, and other platform-level responsibilities.
+- Monitor application health
+- Manage system health
+- Handle background processing
+- Manage notifications
+- Perform platform-level responsibilities
 
 ---
 
 ## 5. Project Scope
 
-### In Scope
+### ✅ In Scope
 
 The planned scope of ShopSphere includes:
 
@@ -78,7 +99,7 @@ The planned scope of ShopSphere includes:
 - Automated testing
 - API documentation
 
-### Out of Scope
+### ❌ Out of Scope
 
 Features that are not yet defined or approved for implementation will not be treated as implemented functionality.
 
@@ -123,26 +144,34 @@ Future technologies, integrations, and advanced platform capabilities will be in
 
 The backend follows a layered architecture designed to separate responsibilities and improve maintainability.
 
-The planned package structure is:
+### Planned Package Structure:
 
-    com.shopsphere
-    ├── config
-    ├── controller
-    ├── service
-    ├── service.impl
-    ├── repository
-    ├── entity
-    ├── dto
-    │   ├── request
-    │   └── response
-    ├── exception
-    ├── mapper
-    ├── util
-    └── constants
+````text
+com.shopsphere
+├── config
+├── controller
+├── service
+├── service.impl
+├── repository
+├── entity
+├── dto
+│   ├── request
+│   └── response
+├── exception
+├── mapper
+├── util
+└── constants
 
-Each layer will have a clearly defined responsibility.
+```text
 
-Controllers will handle HTTP requests, services will contain business logic, repositories will handle data access, entities will represent persistent data, and DTOs will define API request and response structures.
+
+### Layer Responsibilities:
+
+- **Controllers**: Handle HTTP requests.
+- **Services**: Contain business logic.
+- **Repositories**: Handle data access.
+- **Entities**: Represent persistent data.
+- **DTOs**: Define API request and response structures.
 
 ---
 
@@ -150,7 +179,7 @@ Controllers will handle HTTP requests, services will contain business logic, rep
 
 ShopSphere will be developed using an incremental and feature-oriented approach.
 
-Each major feature will follow the development lifecycle:
+### Feature Development Lifecycle:
 
 1. Understand the requirement.
 2. Design the solution.
@@ -169,29 +198,34 @@ This approach keeps the project organized and creates a traceable development hi
 
 The initial backend foundation has been established.
 
-Currently completed:
+### Completed:
 
-- Project repository initialized.
-- Spring Boot backend generated.
-- Java 21 configured.
-- Maven build configured.
-- PostgreSQL database created.
-- Spring Boot database connectivity configured.
-- Backend application successfully starts.
-- Health Check API implemented.
-- Health Check API verified successfully.
-- Git repository connected with GitHub.
-- Initial project commits pushed to GitHub.
+- ✅ Project repository initialized.
+- ✅ Spring Boot backend generated.
+- ✅ Java 21 configured.
+- ✅ Maven build configured.
+- ✅ PostgreSQL database created.
+- ✅ Spring Boot database connectivity configured.
+- ✅ Backend application successfully starts.
+- ✅ Health Check API implemented.
+- ✅ Health Check API verified successfully.
+- ✅ Git repository connected with GitHub.
+- ✅ Initial project commits pushed to GitHub.
+
+---
 
 ### Health Check API
 
-Current endpoint:
+**Endpoint:**
 
-`GET /api/v1/health`
 
-Example response:
-
+**Example Response:**
 ```json
 {
   "status": "UP"
 }
+
+
+---
+
+````
