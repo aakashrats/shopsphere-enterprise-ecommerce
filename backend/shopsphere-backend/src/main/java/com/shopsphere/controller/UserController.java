@@ -1,6 +1,7 @@
 package com.shopsphere.controller;
 
 import com.shopsphere.dto.request.CreateUserRequest;
+import com.shopsphere.dto.request.UpdateUserRequest;
 import com.shopsphere.dto.response.UserResponse;
 import com.shopsphere.service.UserService;
 import jakarta.validation.Valid;
@@ -36,6 +37,19 @@ public class UserController {
 
         return  ResponseEntity.ok(response);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponse> updateUser(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateUserRequest request
+    )
+    {
+        UserResponse response = userService.updateUser(id, request);
+
+        return  ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id)
