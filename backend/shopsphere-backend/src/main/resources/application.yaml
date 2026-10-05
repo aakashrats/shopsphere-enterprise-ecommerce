@@ -19,3 +19,4 @@ spring:
 jwt:
   secret: shopsphere-jwt-secret-key-change-this-before-production-2026
   expiration: 900000
+  refresh-expiration: 604800000
