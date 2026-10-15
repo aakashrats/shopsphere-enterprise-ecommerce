@@ -24,8 +24,23 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     private final CategoryRepository categoryRepository;
     private final ProductCategoryRepository productCategoryRepository;
 
+
     @Override
     public void assignCategoriesToProduct(Long productId, List<Long> categoryIds) {
+
+        if (productId == null || productId <= 0) {
+            throw new IllegalArgumentException("Product ID must be a positive number");
+        }
+
+        if (categoryIds == null || categoryIds.isEmpty()) {
+            throw new IllegalArgumentException("At least one category ID is required");
+        }
+
+        if (categoryIds.stream().anyMatch(id -> id == null || id <= 0)) {
+            throw new IllegalArgumentException(
+                    "Category IDs must be positive numbers");
+        }
+
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException(
                         "Product not found with ID: " + productId));
@@ -48,6 +63,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
             }
         }
     }
+
 
     @Override
     @Transactional(readOnly = true)
