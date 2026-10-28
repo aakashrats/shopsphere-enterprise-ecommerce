@@ -8,14 +8,14 @@ import com.shopsphere.mapper.ProductMapper;
 import com.shopsphere.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -39,33 +39,47 @@ public class ProductController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy,
-            @RequestParam(defaultValue = "asc") String direction) {
+            @RequestParam(defaultValue = "asc") String direction,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) BigDecimal minPrice,
+            @RequestParam(required = false) BigDecimal maxPrice) {
 
         if (page < 0) {
-            throw new IllegalArgumentException("Page must be zero or greater");
+            throw new IllegalArgumentException(
+                    "Page must be zero or greater"
+            );
         }
 
         if (size < 1 || size > 100) {
-            throw new IllegalArgumentException("Page size must be between 1 and 100");
+            throw new IllegalArgumentException(
+                    "Page size must be between 1 and 100"
+            );
         }
 
         if (!List.of("id", "name", "price", "createdAt", "updatedAt",
                 "stockQuantity", "status", "sku", "slug").contains(sortBy)) {
-            throw new IllegalArgumentException("Unsupported sort field: " + sortBy);
+            throw new IllegalArgumentException(
+                    "Unsupported sort field: " + sortBy
+            );
         }
 
-        if (!direction.equalsIgnoreCase("asc")
-                && !direction.equalsIgnoreCase("desc")) {
-            throw new IllegalArgumentException("Direction must be 'asc' or 'desc'");
+        if (!"asc".equalsIgnoreCase(direction)
+                && !"desc".equalsIgnoreCase(direction)) {
+            throw new IllegalArgumentException(
+                    "Direction must be 'asc' or 'desc'"
+            );
         }
 
-        Sort sort = direction.equalsIgnoreCase("desc")
+        Sort sort = "desc".equalsIgnoreCase(direction)
                 ? Sort.by(sortBy).descending()
                 : Sort.by(sortBy).ascending();
 
         PageRequest pageRequest = PageRequest.of(page, size, sort);
 
-        return productService.getAllProducts(pageRequest)
+        return productService.searchProducts(
+                        name, status, minPrice, maxPrice, pageRequest
+                )
                 .map(ProductMapper::toResponse);
     }
 
