@@ -12,4 +12,6 @@ public interface OrderService {
     Order getOrderById(Long userId, Long orderId);
 
     List<Order> getOrderHistory(Long userId);
+
+    Order cancelOrder(Long userId, Long orderId);
 }

@@ -141,6 +141,45 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAllByUserIdOrderByCreatedAtDesc(userId);
     }
 
+    @Override
+    public Order cancelOrder(Long userId, Long orderId) {
+        validatePositiveId(userId, "User ID");
+        validatePositiveId(orderId, "Order ID");
+
+        Order order = orderRepository.findById(orderId)
+                .filter(existingOrder ->
+                        existingOrder.getUser().getId().equals(userId))
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Order not found with ID: " + orderId
+                ));
+
+        if (!"PLACED".equalsIgnoreCase(order.getStatus())) {
+            throw new IllegalArgumentException(
+                    "Only PLACED orders can be cancelled"
+            );
+        }
+
+        List<OrderItem> orderItems =
+                orderItemRepository.findAllByOrderId(order.getId());
+
+        for (OrderItem orderItem : orderItems) {
+            Long productId = orderItem.getProduct().getId();
+
+            Product product = productRepository.findByIdForUpdate(productId)
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            "Product not found with ID: " + productId
+                    ));
+
+            product.setStockQuantity(
+                    product.getStockQuantity() + orderItem.getQuantity()
+            );
+        }
+
+        order.setStatus("CANCELLED");
+
+        return orderRepository.save(order);
+    }
+
     private void validatePositiveId(Long id, String fieldName) {
         if (id == null || id <= 0) {
             throw new IllegalArgumentException(
@@ -148,4 +187,6 @@ public class OrderServiceImpl implements OrderService {
             );
         }
     }
+
+
 }

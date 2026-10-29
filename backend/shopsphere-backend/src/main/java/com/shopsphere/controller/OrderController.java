@@ -53,6 +53,22 @@ public class OrderController {
                 .toList();
     }
 
+    @PatchMapping("/{orderId}/cancel")
+    public OrderResponse cancelOrder(
+            Authentication authentication,
+            @PathVariable Long orderId) {
+
+        User user = getAuthenticatedUser(authentication);
+        Order order = orderService.cancelOrder(user.getId(), orderId);
+
+        List<OrderItem> items =
+                orderItemRepository.findAllByOrderId(order.getId());
+
+        return OrderMapper.toOrderResponse(order, items);
+    }
+
+
+
     @GetMapping("/{orderId}")
     public OrderResponse getOrderById(
             Authentication authentication,
