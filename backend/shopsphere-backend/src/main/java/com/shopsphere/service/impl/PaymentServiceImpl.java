@@ -1,4 +1,3 @@
-
 package com.shopsphere.service.impl;
 
 import com.shopsphere.entity.Order;
@@ -25,7 +24,8 @@ public class PaymentServiceImpl implements PaymentService {
         validatePositiveId(userId, "User ID");
         validatePositiveId(orderId, "Order ID");
 
-        Order order = orderRepository.findById(orderId)
+        // Lock the order to prevent concurrent payment initiation.
+        Order order = orderRepository.findByIdForUpdate(orderId)
                 .filter(existingOrder ->
                         existingOrder.getUser().getId().equals(userId))
                 .orElseThrow(() -> new IllegalArgumentException(
@@ -38,6 +38,21 @@ public class PaymentServiceImpl implements PaymentService {
             );
         }
 
+        // Return an existing active or successful payment.
+        Payment existingPayment = paymentRepository
+                .findAllByOrderIdOrderByCreatedAtDesc(orderId)
+                .stream()
+                .filter(payment ->
+                        "PENDING".equalsIgnoreCase(payment.getStatus())
+                                || "SUCCESS".equalsIgnoreCase(payment.getStatus()))
+                .findFirst()
+                .orElse(null);
+
+        if (existingPayment != null) {
+            return existingPayment;
+        }
+
+        // Create a new attempt if no active or successful payment exists.
         Payment payment = new Payment();
         payment.setOrder(order);
         payment.setPaymentReference(
@@ -121,3 +136,4 @@ public class PaymentServiceImpl implements PaymentService {
         }
     }
 }
+

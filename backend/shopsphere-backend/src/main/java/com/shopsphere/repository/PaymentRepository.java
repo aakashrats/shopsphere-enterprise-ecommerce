@@ -1,4 +1,3 @@
-
 package com.shopsphere.repository;
 
 import com.shopsphere.entity.Payment;
@@ -10,6 +9,8 @@ import java.util.Optional;
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
     List<Payment> findAllByOrderIdOrderByCreatedAtDesc(Long orderId);
+
+   
 
     Optional<Payment> findByPaymentReference(String paymentReference);
 }
